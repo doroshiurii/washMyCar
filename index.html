@@ -252,6 +252,21 @@ h1 small{display:block;font-family:var(--body);font-weight:500;font-size:15px;co
   body.cpick-open{overflow:hidden}
   .cpick-opt{padding-left:12px}
 }
+
+.to-top{position:fixed;z-index:40;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));width:52px;height:52px;border-radius:50%;border:0;background:var(--accent);color:var(--on-accent);font-size:24px;font-weight:700;line-height:1;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(12px);transition:opacity .2s,transform .2s}
+.to-top.show{opacity:1;transform:none}
+.to-top[hidden]{display:none}
+body.cpick-open .to-top{display:none}
+@media (max-width:600px){.to-top{right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));width:48px;height:48px}}
+
+.notes-sec textarea{box-sizing:border-box;width:100%;min-height:76px;resize:vertical;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg);color:var(--ink);font:inherit;font-size:15px;line-height:1.45}
+.notes-sec textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
+.note-status{font-weight:500;font-size:12px;color:var(--ok);margin-left:6px}
+.badge.note-badge{background:var(--accent-soft);border-color:transparent;color:var(--accent);font-weight:700}
+.badge.note-badge[hidden]{display:none}
+.notes-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:22px;padding:12px 14px;border:1px dashed var(--line);border-radius:12px;font-size:13.5px;color:var(--muted)}
+.notes-bar span{flex:1 1 220px}
+.notes-bar button,.notes-bar .nb-import{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 14px;font:inherit;font-size:13.5px;cursor:pointer}
 /* ===== Мобільна адаптація ===== */
 .filters-toggle{display:none}
 .flow .prods button{text-align:left;max-width:100%}
@@ -393,6 +408,11 @@ h1 small{display:block;font-family:var(--body);font-weight:500;font-size:15px;co
       <div class="brandbar" id="brandbar" hidden></div>
     </div>
     <div class="grid" id="grid"></div>
+    <div class="notes-bar">
+      <span>📝 Нотатки зберігаються в цьому браузері на цьому пристрої (<span id="notes-count">0</span>).</span>
+      <button type="button" id="notes-export">Експорт нотаток</button>
+      <label class="nb-import">Імпорт<input type="file" id="notes-import" accept="application/json,.json" hidden></label>
+    </div>
   </section>
 
   <section id="tab-flow" hidden>
@@ -400,6 +420,7 @@ h1 small{display:block;font-family:var(--body);font-weight:500;font-size:15px;co
   </section>
 </div>
 
+<button type="button" class="to-top" id="to-top" aria-label="Нагору" title="Нагору" hidden>↑</button>
 <script>
 /* =========================================================
    КАТЕГОРІЇ
@@ -3591,6 +3612,11 @@ const COMPARE = [
     {n:"Електричний пінний розпилювач", k:"Автономний, акумулятор", w:"Точково: колеса, арки, комахи; без мийки. Пропорції «Розпилювач»."}]}
 ];
 
+const NOTES_KEY="myika.notes.v1";
+let NOTES={};
+try{ NOTES=JSON.parse(localStorage.getItem(NOTES_KEY)||"{}")||{}; }catch(e){ NOTES={}; }
+function saveNotes(){ try{ localStorage.setItem(NOTES_KEY, JSON.stringify(NOTES)); return true; }catch(e){ return false; } }
+const noteOf = p => (NOTES[p.name]||"");
 const STRENGTH = {soft:"М'який", medium:"Середній", strong:"Агресивний"};
 
 let activeCat = "all";
@@ -3636,6 +3662,7 @@ function cardHTML(p, i){
   if (p.strength) badges.push(`<span class="badge ${p.strength}">${STRENGTH[p.strength]}</span>`);
   if (p.ph) badges.push(`<span class="badge">pH: ${esc(p.ph)}</span>`);
   if (p.frostSensitive) badges.push(`<span class="badge frost">Боїться морозу</span>`);
+  badges.push(`<span class="badge note-badge" ${noteOf(p).trim()?"":"hidden"}>📝 Нотатка</span>`);
   if (p.film && p.film.level==="no") badges.push(`<span class="badge film-no">⛔ Плівки</span>`);
   if (p.film && p.film.level==="caution") badges.push(`<span class="badge film-caution">⚠ Плівки</span>`);
   if (p.volume) badges.push(`<span class="badge">${esc(p.volume)}</span>`);
@@ -3672,6 +3699,7 @@ function cardHTML(p, i){
     </div>
     <div class="card-body">
       ${p.purpose ? `<div class="sec"><h3>Для чого</h3>${esc(p.purpose)}</div>` : ""}
+      <div class="sec notes-sec"><h3>📝 Мої нотатки <span class="note-status" aria-live="polite"></span></h3><textarea class="note-input" data-note="${i}" rows="3" placeholder="Твій досвід: як розводиш, що сподобалось, що ні…">${esc(noteOf(p))}</textarea></div>
       ${compareHTML(p)}
       ${p.photo ? `<img class="photo-big" src="${esc(p.photo)}" alt="${esc(p.name)}" loading="lazy" onerror="this.remove()">` : ""}
       ${dil}
@@ -3719,7 +3747,7 @@ function renderGrid(){
   const items = PRODUCTS.map((p,i)=>[p,i]).filter(([p]) =>
     (activeCat==="all" || p.category===activeCat || (p.alsoIn||[]).includes(activeCat)) &&
     (!activeBrand || brandKey(p.brand)===activeBrand) &&
-    (!q || [p.name,p.brand,p.purpose,p.type,(CATEGORIES[p.category]||{}).name].join(" ").toLowerCase().includes(q))
+    (!q || [p.name,p.brand,p.purpose,p.type,(CATEGORIES[p.category]||{}).name,noteOf(p)].join(" ").toLowerCase().includes(q))
   );
   $("#grid").innerHTML = items.length
     ? items.map(([p,i])=>cardHTML(p,i)).join("")
@@ -3883,6 +3911,49 @@ $("#c-hint").addEventListener("click", e=>{
 $("#c-vol").addEventListener("change", calc);
 
 fillCalcProducts(); renderChips(); renderGrid(); renderFlow(); calc();
+
+(function(){
+  const btn=$("#to-top"); let shown=false;
+  const upd=()=>{ const on=window.scrollY>600;
+    if(on&&!shown){ btn.hidden=false; requestAnimationFrame(()=>btn.classList.add("show")); shown=true; }
+    else if(!on&&shown){ btn.classList.remove("show"); shown=false; setTimeout(()=>{ if(!shown) btn.hidden=true; },200); } };
+  window.addEventListener("scroll",upd,{passive:true}); upd();
+  btn.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
+})();
+
+(function(){
+  const timers={};
+  const cnt=()=>{ const n=Object.values(NOTES).filter(v=>v&&v.trim()).length; const el=$("#notes-count"); if(el) el.textContent = n ? n+" шт." : "поки немає"; };
+  cnt();
+  $("#grid").addEventListener("input", e=>{
+    const ta=e.target.closest(".note-input"); if(!ta) return;
+    const p=PRODUCTS[+ta.dataset.note]; const card=ta.closest(".card"); const st=card.querySelector(".note-status");
+    st.textContent="…";
+    clearTimeout(timers[p.name]);
+    timers[p.name]=setTimeout(()=>{
+      const v=ta.value; if(v.trim()) NOTES[p.name]=v; else delete NOTES[p.name];
+      const ok=saveNotes(); st.textContent= ok ? "збережено" : "не вдалося зберегти (браузер блокує сховище)";
+      const b=card.querySelector(".note-badge"); if(b) b.hidden=!v.trim();
+      cnt();
+    },500);
+  });
+  $("#notes-export").addEventListener("click", ()=>{
+    const data=JSON.stringify({app:"myika",version:1,exported:new Date().toISOString(),notes:NOTES},null,2);
+    const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([data],{type:"application/json"}));
+    a.download="myika-notatky-"+new Date().toISOString().slice(0,10)+".json"; document.body.appendChild(a); a.click();
+    setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },500);
+  });
+  $("#notes-import").addEventListener("change", async e=>{
+    const f=e.target.files[0]; if(!f) return;
+    try{
+      const j=JSON.parse(await f.text()); const n=(j&&j.notes)||j;
+      if(typeof n!=="object") throw 0;
+      let added=0; for(const [k,v] of Object.entries(n)){ if(typeof v==="string"&&v.trim()){ if(NOTES[k]&&NOTES[k]!==v){ NOTES[k]=NOTES[k]+"\n---\n"+v; } else NOTES[k]=v; added++; } }
+      saveNotes(); renderGrid(); cnt(); alert("Імпортовано нотаток: "+added);
+    }catch(err){ alert("Не вдалося прочитати файл нотаток"); }
+    e.target.value="";
+  });
+})();
 </script>
 </body>
 </html>
