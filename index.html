@@ -151,6 +151,15 @@ h1 small{display:block;font-family:var(--body);font-weight:500;font-size:15px;co
 .cmp-go{background:none;border:0;padding:0;font:inherit;color:var(--ink);text-align:left;cursor:pointer;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
 .cmp-go:hover{text-decoration-color:var(--accent)}
 .cb{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--ink);border-radius:4px;padding:1px 5px;margin-right:6px;vertical-align:1px;text-decoration:none}
+.calc-link{cursor:pointer;transition:transform .12s, box-shadow .12s}
+.calc-link:hover{transform:translateY(-1px);box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.ratio .to-calc{display:block;font-style:normal;font-size:11px;font-weight:700;color:var(--accent);margin-top:2px;white-space:nowrap}
+.dil-row{cursor:pointer}
+.dil-row:hover th,.dil-row:hover td{background:var(--accent-soft)}
+.dil-row .to-calc{font-size:12px;opacity:.75}
+.h3hint{font-weight:500;font-size:12px;color:var(--accent);margin-left:6px}
+@keyframes flash{0%{box-shadow:0 0 0 0 var(--accent)}40%{box-shadow:0 0 0 6px var(--accent)}100%{box-shadow:0 0 0 0 transparent}}
+.calc.flash{animation:flash 1.2s ease-out}
 .dil-table{width:100%;border-collapse:collapse;font-size:14.5px}
 .dil-table th,.dil-table td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}
 .dil-table th{font-weight:500;color:var(--muted)}
@@ -206,6 +215,43 @@ h1 small{display:block;font-family:var(--body);font-weight:500;font-size:15px;co
 [hidden]{display:none!important}
 @media (prefers-reduced-motion:no-preference){.card-body{animation:open .18s ease-out}@keyframes open{from{opacity:0;transform:translateY(-4px)}}}
 
+
+.calc .c-prod{display:flex;flex-direction:column;gap:6px;font-size:13px;min-width:0}
+.calc .c-prod .lbl{opacity:.8}
+.cpick{position:relative}
+.cpick-btn{box-sizing:border-box;width:100%;min-height:44px;display:flex;align-items:center;gap:8px;background:transparent;border:1px solid currentColor;border-radius:10px;padding:6px 12px;color:inherit;font:inherit;font-size:15px;cursor:pointer;text-align:left}
+.cpick-cur{flex:1;min-width:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.cpick-cur .nm{font-weight:700}
+.cpick-cur .lb{opacity:.8;font-size:13.5px}
+.cpick-arr{opacity:.8}
+.cpick-btn[aria-expanded="true"] .cpick-arr{transform:rotate(180deg)}
+.cpick-panel{position:absolute;z-index:50;left:0;right:0;top:calc(100% + 6px);background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:14px;box-shadow:0 12px 32px rgba(0,0,0,.28);overflow:hidden;display:flex;flex-direction:column;max-height:min(70vh,560px)}
+.cpick-panel[hidden],.cpick-back[hidden]{display:none}
+.cpick-top{display:flex;gap:8px;padding:10px;border-bottom:1px solid var(--line);background:var(--surface)}
+.cpick-top input{flex:1;min-width:0;height:40px;border:1px solid var(--line);border-radius:10px;padding:0 12px;background:var(--bg);color:var(--ink);font:inherit;font-size:15px}
+.cpick-x{width:40px;height:40px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);cursor:pointer;font-size:16px}
+.cpick-list{overflow-y:auto;padding:6px 8px 10px;-webkit-overflow-scrolling:touch}
+.cpick-grp{padding:8px 4px 6px;border-bottom:1px solid var(--line)}
+.cpick-grp:last-child{border-bottom:0}
+.cpick-head{display:flex;align-items:center;gap:8px;margin:0 4px 6px;font-weight:700;font-size:14.5px}
+.cpick-head img{width:28px;height:28px;object-fit:contain;flex:none}
+.cpick-head .nm{min-width:0}
+.cpick-opt{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:0;background:none;color:var(--ink);font:inherit;font-size:14.5px;padding:9px 10px 9px 40px;border-radius:9px;cursor:pointer}
+.cpick-opt:hover{background:var(--bg)}
+.cpick-opt.on{background:var(--accent-soft);font-weight:700}
+.cpick-opt .lb{flex:1;min-width:0}
+.cpick-opt .rt{flex:none;font-family:var(--display);font-size:13px;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:2px 9px}
+.cpick-opt.on .rt{background:var(--accent);color:var(--on-accent)}
+.cpick-opt.manual{padding-left:12px;margin:2px 0 4px;border:1px dashed var(--line)}
+.cpick-opt.manual .hint{color:var(--muted);font-size:12.5px;font-weight:400}
+.cpick-empty{padding:18px;text-align:center;color:var(--muted)}
+.cpick-back{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:49}
+@media (min-width:601px){.cpick-back{background:transparent}}
+@media (max-width:600px){
+  .cpick-panel{position:fixed;left:0;right:0;top:auto;bottom:0;max-height:78vh;border-radius:18px 18px 0 0;padding-bottom:env(safe-area-inset-bottom,0px)}
+  body.cpick-open{overflow:hidden}
+  .cpick-opt{padding-left:12px}
+}
 /* ===== Мобільна адаптація ===== */
 .filters-toggle{display:none}
 .flow .prods button{text-align:left;max-width:100%}
@@ -247,6 +293,7 @@ h1 small{display:block;font-family:var(--body);font-weight:500;font-size:15px;co
   .card .brand{grid-row:3}
   .ratio,.has-photo .ratio{grid-column:1/-1;grid-row:4;justify-self:stretch;display:flex;align-items:baseline;gap:10px;min-width:0;padding:6px 12px;margin-top:8px;text-align:left}
   .ratio b{font-size:19px}
+  .ratio .to-calc{display:inline;margin:0 0 0 auto}
   .ratio.rtu b{font-size:15px}
   .card-body{padding:0 14px 14px}
   .sec{margin-top:14px}
@@ -307,9 +354,17 @@ h1 small{display:block;font-family:var(--body);font-weight:500;font-size:15px;co
     </details>
     <div class="calc">
       <h2>Калькулятор розведення</h2>
-      <label class="c-prod"><span>Засіб</span>
-        <select id="c-prod"><option value="">— вручну —</option></select>
-      </label>
+      <div class="c-prod"><span class="lbl">Засіб</span>
+        <select id="c-prod" hidden><option value="">— вручну —</option></select>
+        <div class="cpick" id="cpick">
+          <button type="button" class="cpick-btn" id="cpick-btn" aria-haspopup="listbox" aria-expanded="false"><span class="cpick-cur" id="cpick-cur">— вручну —</span><span class="cpick-arr">▾</span></button>
+          <div class="cpick-back" id="cpick-back" hidden></div>
+          <div class="cpick-panel" id="cpick-panel" hidden role="listbox">
+            <div class="cpick-top"><input type="search" id="cpick-q" placeholder="Пошук: бренд, засіб, призначення…" autocomplete="off"><button type="button" class="cpick-x" id="cpick-x" aria-label="Закрити">✕</button></div>
+            <div class="cpick-list" id="cpick-list"></div>
+          </div>
+        </div>
+      </div>
       <label><span>Пропорція 1 : X</span>
         <input id="c-ratio" type="number" min="1" step="1" value="10" inputmode="numeric">
       </label>
@@ -3574,6 +3629,8 @@ function cardHTML(p, i){
     ? `<div class="ratio rtu"><b>Готовий</b><span>не розводити</span></div>`
     : main ? `<div class="ratio"><b>1:${main.ratio}</b><span>${esc(main.label)}</span></div>` : "";
 
+  const hasDil = !p.readyToUse && p.dilutions && p.dilutions.length;
+  const ratioHTML = hasDil ? ratioBox.replace('<div class="ratio', `<div data-calc="${i}:0" title="Відкрити в калькуляторі" class="calc-link ratio`).replace('</span></div>','</span><em class="to-calc">🧮 калькулятор</em></div>') : ratioBox;
   const badges = [];
   if (p.example) badges.push(`<span class="badge example">Приклад</span>`);
   if (p.strength) badges.push(`<span class="badge ${p.strength}">${STRENGTH[p.strength]}</span>`);
@@ -3586,9 +3643,9 @@ function cardHTML(p, i){
   let dil = "";
   if (!p.readyToUse && p.dilutions?.length){
     const vols = [500,1000,10000];
-    dil = `<div class="sec"><h3>Розведення: скільки засобу</h3><div class="table-wrap"><table class="dil-table">
+    dil = `<div class="sec"><h3>Розведення: скільки засобу <span class="h3hint">натисни рядок → калькулятор</span></h3><div class="table-wrap"><table class="dil-table">
       <tr><th></th>${vols.map(v=>`<th>${fmtMl(v)}</th>`).join("")}</tr>
-      ${p.dilutions.map(d=>`<tr><th>${esc(d.label)} (1:${d.ratio})</th>${vols.map(v=>`<td class="num">${fmtMl(conc(v,d.ratio))}</td>`).join("")}</tr>`).join("")}
+      ${p.dilutions.map((d,j)=>`<tr class="dil-row" data-calc="${i}:${j}" title="Відкрити в калькуляторі"><th>${esc(d.label)} (1:${d.ratio}) <span class="to-calc">🧮</span></th>${vols.map(v=>`<td class="num">${fmtMl(conc(v,d.ratio))}</td>`).join("")}</tr>`).join("")}
     </table></div></div>`;
   }
 
@@ -3607,7 +3664,7 @@ function cardHTML(p, i){
     <div class="card-head${p.photo ? " has-photo" : ""}" data-toggle>
       ${p.photo ? `<img class="thumb" src="${esc(p.photo)}" alt="" loading="lazy" onerror="this.closest('.card-head').classList.remove('has-photo');this.remove()">` : ""}
       <button type="button" class="card-cat" data-fcat="${esc(p.category)}" title="Показати все: ${esc(cat.name)}">${cat.name}</button>
-      ${ratioBox}
+      ${ratioHTML}
       <h2>${p.link ? `<a class="name-link" href="${esc(p.link)}" target="_blank" rel="noopener">${esc(p.name)}<span class="ext" aria-hidden="true">↗</span></a>` : esc(p.name)}</h2>
       ${p.brand ? `<button type="button" class="brand" data-fbrand="${esc(brandKey(p.brand))}" title="Усі засоби ${esc(p.brand)}" style="${brandStyle(p.brand)}">${esc(p.brand)}</button>` : ""}
       <div class="badges">${badges.join("")}</div>
@@ -3685,21 +3742,65 @@ function renderFlow(){
   }).join("");
 }
 
+function calcList(){
+  return PRODUCTS.map((p,i)=>[p,i]).filter(([p])=>!p.readyToUse && p.dilutions && p.dilutions.length)
+    .sort((a,b)=>(a[0].brand||"").localeCompare(b[0].brand||"") || a[0].name.localeCompare(b[0].name));
+}
 function fillCalcProducts(){
   const sel = $("#c-prod");
-  const list = PRODUCTS.map((p,i)=>[p,i]).filter(([p])=>!p.readyToUse && p.dilutions && p.dilutions.length)
-    .sort((a,b)=>a[0].name.localeCompare(b[0].name));
+  const list = calcList();
   sel.innerHTML = `<option value="">— вручну —</option>` + list.map(([p,i])=>
-    `<optgroup label="${esc(p.name)} · ${esc(p.brand)}">` +
-    p.dilutions.map((d,j)=>`<option value="${i}:${j}">${esc(p.name)} · ${esc(d.label)} — 1:${d.ratio}</option>`).join("") +
+    `<optgroup label="${esc(p.brand)} · ${esc(p.name)}">` +
+    p.dilutions.map((d,j)=>`<option value="${i}:${j}">${esc(p.brand)} · ${esc(p.name)} · ${esc(d.label)} — 1:${d.ratio}</option>`).join("") +
     `</optgroup>`).join("");
+  renderPickList("");
+}
+function renderPickList(q){
+  q=(q||"").trim().toLowerCase();
+  const cur=$("#c-prod").value;
+  const list=calcList().filter(([p])=>!q || [p.brand,p.name,p.type,p.purpose,...p.dilutions.map(d=>d.label)].join(" ").toLowerCase().includes(q));
+  let html = q ? "" : `<button type="button" class="cpick-opt manual ${cur===""?"on":""}" data-v="">— вручну — <span class="hint">ввести пропорцію самому</span></button>`;
+  html += list.map(([p,i])=>`<div class="cpick-grp">
+      <div class="cpick-head">${p.photo?`<img src="${esc(p.photo)}" alt="" loading="lazy">`:""}<span class="cb" style="${brandStyle(p.brand)}">${esc(p.brand)}</span><span class="nm">${esc(p.name)}</span></div>
+      ${p.dilutions.map((d,j)=>{const v=`${i}:${j}`;return `<button type="button" class="cpick-opt ${cur===v?"on":""}" data-v="${v}"><span class="lb">${esc(d.label)}</span><span class="rt">1:${d.ratio}</span></button>`;}).join("")}
+    </div>`).join("");
+  if(!list.length) html += `<div class="cpick-empty">Нічого не знайдено</div>`;
+  $("#cpick-list").innerHTML = html;
+}
+function updatePickBtn(){
+  const v=$("#c-prod").value, cur=$("#cpick-cur");
+  if(!v){ cur.innerHTML="— вручну —"; return; }
+  const [i,j]=v.split(":").map(Number); const p=PRODUCTS[i], d=p.dilutions[j];
+  cur.innerHTML=`<span class="cb" style="${brandStyle(p.brand)}">${esc(p.brand)}</span><span class="nm">${esc(p.name)}</span><span class="lb">${esc(d.label)} · 1:${d.ratio}</span>`;
+}
+function openPick(){
+  $("#cpick-panel").hidden=false; $("#cpick-back").hidden=false; $("#cpick-btn").setAttribute("aria-expanded","true");
+  $("#cpick-q").value=""; renderPickList("");
+  document.body.classList.add("cpick-open");
+  const on=$("#cpick-list .cpick-opt.on"); if(on) on.scrollIntoView({block:"center"});
+  if(window.matchMedia("(min-width:601px)").matches) $("#cpick-q").focus();
+}
+function closePick(){
+  $("#cpick-panel").hidden=true; $("#cpick-back").hidden=true; $("#cpick-btn").setAttribute("aria-expanded","false");
+  document.body.classList.remove("cpick-open");
+}
+function openInCalc(v){
+  const sel=$("#c-prod"); sel.value=v;
+  const [i,j]=v.split(":").map(Number); const d=PRODUCTS[i]?.dilutions?.[j]; if(!d) return;
+  $("#c-ratio").value=d.ratio;
+  // підібрати типовий об'єм: відро для пропорцій ≥100, піна/спрей — 1 л
+  const vol=$("#c-vol"); if(d.ratio>=100) vol.value="20000"; else if(/спрей|розпилювач/i.test(d.label)) vol.value="500"; else vol.value="1000";
+  calcHint(); calc();
+  const box=$(".calc"); box.scrollIntoView({behavior:"smooth",block:"start"});
+  box.classList.remove("flash"); void box.offsetWidth; box.classList.add("flash");
 }
 function calcHint(){
+  updatePickBtn();
   const v = $("#c-prod").value, h = $("#c-hint");
   if(!v){ h.hidden = true; return; }
   const [i,j] = v.split(":").map(Number); const p = PRODUCTS[i], d = p.dilutions[j];
   h.hidden = false;
-  h.innerHTML = `${esc(p.name)} (${esc(p.brand)}): ${esc(d.label)}. <button type="button" data-goto="${i}">Відкрити картку</button>`;
+  h.innerHTML = `${esc(p.brand)} · ${esc(p.name)}: ${esc(d.label)}. <button type="button" data-goto="${i}">Відкрити картку</button>`;
 }
 function calc(){
   const r = Math.max(1, parseFloat($("#c-ratio").value)||1);
@@ -3730,6 +3831,8 @@ $("#brandchips").addEventListener("click", e=>{
 });
 $("#brandbar").addEventListener("click", e=>{ if(e.target.closest("#brand-clear")){ activeBrand=""; renderGrid(); } });
 $("#grid").addEventListener("click", e=>{
+  const dc = e.target.closest("[data-calc]");
+  if(dc){ openInCalc(dc.dataset.calc); return; }
   const cg = e.target.closest("[data-cmp-goto]");
   if(cg){ const j=cg.dataset.cmpGoto; activeCat="all"; activeBrand=""; query=""; $("#search").value=""; renderChips(); renderGrid();
     const card=document.querySelector(`.card[data-i="${j}"]`);
@@ -3754,6 +3857,17 @@ $("#flow").addEventListener("click", e=>{
   const card = document.querySelector(`.card[data-i="${b.dataset.goto}"]`);
   if(card){ card.querySelector("[data-toggle]").click(); card.scrollIntoView({behavior:"smooth",block:"start"}); }
 });
+$("#cpick-btn").addEventListener("click", ()=>{ $("#cpick-panel").hidden ? openPick() : closePick(); });
+$("#cpick-x").addEventListener("click", closePick);
+$("#cpick-back").addEventListener("click", closePick);
+$("#cpick-q").addEventListener("input", e=>renderPickList(e.target.value));
+$("#cpick-list").addEventListener("click", e=>{
+  const o=e.target.closest(".cpick-opt"); if(!o) return;
+  const sel=$("#c-prod"); sel.value=o.dataset.v; sel.dispatchEvent(new Event("change"));
+  closePick();
+});
+document.addEventListener("keydown", e=>{ if(e.key==="Escape" && !$("#cpick-panel").hidden) closePick(); });
+document.addEventListener("click", e=>{ if(!$("#cpick-panel").hidden && !e.target.closest("#cpick")) closePick(); });
 $("#c-ratio").addEventListener("input", ()=>{ $("#c-prod").value=""; calcHint(); calc(); });
 $("#c-prod").addEventListener("change", e=>{
   const v=e.target.value;
