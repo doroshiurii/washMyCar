@@ -205,6 +205,73 @@ h1 small{display:block;font-family:var(--body);font-weight:500;font-size:15px;co
 
 [hidden]{display:none!important}
 @media (prefers-reduced-motion:no-preference){.card-body{animation:open .18s ease-out}@keyframes open{from{opacity:0;transform:translateY(-4px)}}}
+
+/* ===== Мобільна адаптація ===== */
+.filters-toggle{display:none}
+.flow .prods button{text-align:left;max-width:100%}
+.flow .prods button .b{white-space:nowrap}
+.dil-table td.num,.dil-table th{white-space:nowrap}
+@media (max-width:600px){
+  .wrap{padding:14px 10px 48px}
+  header{gap:10px;margin-bottom:14px}
+  h1{font-size:30px}
+  h1 small{font-size:13.5px;margin-top:6px}
+  .tabs{width:100%}
+  .tabs button{flex:1;padding:9px 8px;font-size:15px}
+  .carbox summary{padding:12px 14px;font-size:15px}
+  .carbox .in{padding:0 12px 12px}
+  .zones{font-size:13px}
+  .zones th,.zones td{padding:6px 5px}
+  .calc{padding:14px 14px 16px;gap:12px}
+  .calc{grid-template-columns:1fr 1fr}
+  .calc label>span{font-size:12.5px}
+  .calc select,.calc input{font-size:15px}
+  .calc .stat b{font-size:18px}
+  .filters-toggle{display:flex;align-items:center;gap:8px;width:100%;padding:11px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+  .filters-toggle .ft-state{font-weight:500;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1;text-align:left}
+  .filters-toggle.active .ft-state{color:var(--accent);font-weight:700}
+  .filters-toggle .ft-arrow{color:var(--muted)}
+  .filters-toggle[aria-expanded="true"] .ft-arrow{transform:rotate(180deg)}
+  .filters{display:none;flex-direction:column;gap:10px}
+  .filters.open{display:flex}
+  .chip{font-size:13.5px;padding:5px 10px}
+  .chip.bchip{font-size:12px;padding:4px 9px}
+  .grid{gap:12px}
+  .card{border-left-width:6px;border-radius:14px}
+  .card-head{padding:14px 14px 12px;gap:2px 12px}
+  .card-head.has-photo{grid-template-columns:60px minmax(0,1fr)}
+  .card-head{grid-template-columns:minmax(0,1fr)}
+  .thumb{width:60px;height:60px;grid-row:1/4}
+  .card-cat{grid-row:1}
+  .card h2{grid-row:2;font-size:17px}
+  .card .brand{grid-row:3}
+  .ratio,.has-photo .ratio{grid-column:1/-1;grid-row:4;justify-self:stretch;display:flex;align-items:baseline;gap:10px;min-width:0;padding:6px 12px;margin-top:8px;text-align:left}
+  .ratio b{font-size:19px}
+  .ratio.rtu b{font-size:15px}
+  .card-body{padding:0 14px 14px}
+  .sec{margin-top:14px}
+  .dont,.safety,.film,.notes{padding:10px 12px}
+  .cmp{padding:10px 10px}
+  .cmp-table,.cmp-table tbody,.cmp-table tr,.cmp-table td{display:block;width:100%}
+  .cmp-table tr:first-child{display:none}
+  .cmp-table tr{padding:9px 6px;border-bottom:1px solid var(--line)}
+  .cmp-table tr:last-child{border-bottom:0}
+  .cmp-table td{border:0;padding:2px 0;min-width:0}
+  .cmp-table td:first-child{min-width:0;margin-bottom:3px}
+  .cmp-table td[data-label]::before{content:attr(data-label)": ";color:var(--muted);font-size:12.5px}
+  .cmp-table tr.self{border-radius:8px}
+  .cmp-table tr.self td{background:transparent}
+  .cmp-table tr.self{background:var(--accent-soft)}
+  .dil-table{font-size:13.5px}
+  .dil-table th,.dil-table td{padding:6px 5px}
+  .photo-big{max-height:240px}
+  .flow>li{grid-template-columns:34px minmax(0,1fr);gap:10px;padding:14px 0}
+  .flow>li::before{font-size:22px}
+  .flow h3{font-size:16.5px}
+  .flow p{font-size:14.5px}
+  .flow .prods button{font-size:13.5px;padding:5px 10px;flex-wrap:wrap;row-gap:2px}
+  .calc .hint{font-size:12.5px}
+}
 </style>
 </head>
 <body>
@@ -249,12 +316,12 @@ h1 small{display:block;font-family:var(--body);font-weight:500;font-size:15px;co
       <label><span>Об'єм розчину</span>
         <select id="c-vol">
           <option value="250">250 мл</option>
-          <option value="500">500 мл · спрей</option>
-          <option value="1000" selected>1 л · піногенератор</option>
+          <option value="500">500 мл (спрей)</option>
+          <option value="1000" selected>1 л (піна)</option>
           <option value="2000">2 л</option>
           <option value="10000">10 л</option>
-          <option value="15000">15 л · відро, неповне</option>
-          <option value="20000">20 л · моє відро</option>
+          <option value="15000">15 л (відро)</option>
+          <option value="20000">20 л (відро)</option>
         </select>
       </label>
       <div class="out-wrap"><span>Результат</span><div class="out" id="c-out"></div></div>
@@ -263,8 +330,11 @@ h1 small{display:block;font-family:var(--body);font-weight:500;font-size:15px;co
 
     <div class="toolbar">
       <input class="search" id="search" type="search" placeholder="Пошук: назва, бренд, для чого…" autocomplete="off">
+      <button type="button" class="filters-toggle" id="filters-toggle" aria-expanded="false"><span>Фільтри</span><span class="ft-state" id="ft-state">усі</span><span class="ft-arrow">▾</span></button>
+      <div class="filters" id="filters">
       <div class="chips" id="chips"></div>
       <div class="chips brands" id="brandchips"></div>
+      </div>
       <div class="brandbar" id="brandbar" hidden></div>
     </div>
     <div class="grid" id="grid"></div>
@@ -3490,7 +3560,7 @@ function compareHTML(p){
       const j = PRODUCTS.findIndex(x=>x.name===it.n); const q = PRODUCTS[j]; if(!q) return "";
       const self = q===p;
       const nm = `${q.brand?`<span class="cb" style="${brandStyle(q.brand)}">${esc(q.brand)}</span>`:""}${esc(q.name)}`;
-      return `<tr class="${self?"self":""}"><td>${self?`<b>${nm}</b><span class="you">цей</span>`:`<button type="button" class="cmp-go" data-cmp-goto="${j}">${nm}</button>`}</td><td>${esc(it.k)}</td><td>${esc(it.w)}</td></tr>`;
+      return `<tr class="${self?"self":""}"><td>${self?`<b>${nm}</b><span class="you">цей</span>`:`<button type="button" class="cmp-go" data-cmp-goto="${j}">${nm}</button>`}</td><td data-label="Особливість">${esc(it.k)}</td><td data-label="Коли брати">${esc(it.w)}</td></tr>`;
     }).join("");
     return `<div class="sec cmp"><h3>Порівняння: ${esc(g.title)}</h3>${g.note?`<p class="cmp-note">${esc(g.note)}</p>`:""}<div class="table-wrap"><table class="cmp-table"><tr><th>Засіб</th><th>Особливість</th><th>Коли брати</th></tr>${rows}</table></div></div>`;
   }).join("");
@@ -3579,8 +3649,15 @@ function renderBrandbar(){
   bar.hidden=false;
   bar.innerHTML=`Бренд: <span class="bb" style="${brandStyle(ex?ex.brand:"")}">${esc(ex?ex.brand:activeBrand)}</span> ${n} засоб${n%10===1&&n%100!==11?"":(n%10>=2&&n%10<=4&&(n%100<10||n%100>=20)?"и":"ів")} <button type="button" class="x" id="brand-clear">✕ Скинути бренд</button>`;
 }
+function updateFilterState(){
+  const parts=[];
+  if(activeCat!=="all") parts.push((CATEGORIES[activeCat]||{}).name||activeCat);
+  if(activeBrand){ const ex=PRODUCTS.find(p=>brandKey(p.brand)===activeBrand); parts.push(ex?ex.brand:activeBrand); }
+  const el=$("#ft-state"); if(el) el.textContent = parts.length ? parts.join(" · ") : "усі";
+  const t=$("#filters-toggle"); if(t) t.classList.toggle("active", parts.length>0);
+}
 function renderGrid(){
-  renderBrandbar();
+  renderBrandbar(); updateFilterState();
   const q = query.trim().toLowerCase();
   const items = PRODUCTS.map((p,i)=>[p,i]).filter(([p]) =>
     (activeCat==="all" || p.category===activeCat || (p.alsoIn||[]).includes(activeCat)) &&
@@ -3643,6 +3720,10 @@ $("#chips").addEventListener("click", e=>{
   activeCat = b.dataset.cat; renderChips(); renderGrid();
 });
 $("#search").addEventListener("input", e=>{ query = e.target.value; renderGrid(); });
+$("#filters-toggle").addEventListener("click", ()=>{
+  const f=$("#filters"); const open=f.classList.toggle("open");
+  $("#filters-toggle").setAttribute("aria-expanded", open);
+});
 $("#brandchips").addEventListener("click", e=>{
   const b=e.target.closest(".bchip"); if(!b) return;
   activeBrand = b.dataset.brand; renderGrid();
