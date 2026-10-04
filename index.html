@@ -15,6 +15,7 @@
   --bg:#ECECEA; --surface:#FFFFFF; --ink:#24272B; --muted:#686C72;
   --line:#D6D6D2; --accent:#D9580B; --accent-soft:#FBE6D6;
   --frost:#3D7896; --frost-soft:#E2EDF3; --on-accent:#FFFFFF;
+  --step1:#C62828; --step2:#B98900; --step3:#7B3FBF;
   --danger:#B9322A; --danger-soft:#F8E1DE; --warn:#9A6B00; --warn-soft:#FBF0D2;
   --ok:#2E7D4F; --ok-soft:#DDF0E4;
   --c-prewash:#E39B2D; --c-wash:#5E9A86; --c-wheels:#D6336C; --c-decon:#C4472C;
@@ -30,6 +31,7 @@
     --bg:#1A1C1F; --surface:#24272B; --ink:#ECECE9; --muted:#9DA1A7;
     --line:#383C41; --accent:#FF8A3D; --accent-soft:#3E2A1C;
     --frost:#8CC3DE; --frost-soft:#1F3440; --on-accent:#1A1C1F;
+    --step1:#FF6B6B; --step2:#F5C518; --step3:#B98CF2;
     --danger:#F08A7F; --danger-soft:#3D1F1C; --warn:#E8C060; --warn-soft:#3A3018;
     --ok:#7DCC9C; --ok-soft:#1A3526;
   }
@@ -38,6 +40,7 @@
   --bg:#1A1C1F; --surface:#24272B; --ink:#ECECE9; --muted:#9DA1A7;
   --line:#383C41; --accent:#FF8A3D; --accent-soft:#3E2A1C;
   --frost:#8CC3DE; --frost-soft:#1F3440; --on-accent:#1A1C1F;
+    --step1:#FF6B6B; --step2:#F5C518; --step3:#B98CF2;
   --danger:#F08A7F; --danger-soft:#3D1F1C; --warn:#E8C060; --warn-soft:#3A3018;
   --ok:#7DCC9C; --ok-soft:#1A3526;
 }
@@ -267,6 +270,43 @@ body.cpick-open .to-top{display:none}
 .notes-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:22px;padding:12px 14px;border:1px dashed var(--line);border-radius:12px;font-size:13.5px;color:var(--muted)}
 .notes-bar span{flex:1 1 220px}
 .notes-bar button,.notes-bar .nb-import{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 14px;font:inherit;font-size:13.5px;cursor:pointer}
+
+.polish{display:flex;flex-direction:column;gap:14px}
+.pol-intro h2{font-family:var(--display);font-weight:500;font-size:24px;margin:0 0 6px}
+.pol-intro p{margin:0;font-size:15.5px}
+.pol-box{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-l);padding:16px 18px}
+.pol-box h3{margin:0 0 10px;font-size:17px}
+.pol-box ul,.pol-box ol{margin:0;padding-left:22px}
+.pol-box li{margin:5px 0}
+.pol-box.warn{border:2px solid var(--warn);background:var(--warn-soft)}
+.pol-box.warn h3{color:var(--warn)}
+.pol-box.danger{border:2px solid var(--danger);background:var(--danger-soft)}
+.pol-box.danger h3{color:var(--danger)}
+.pol-grp{display:grid;grid-template-columns:130px minmax(0,1fr);align-items:start;gap:6px 10px;margin:8px 0}
+.pol-grp .pc{display:flex;flex-wrap:wrap;gap:6px}
+.pol-grp>span{font-size:13px;color:var(--muted);padding-top:6px}
+.pchip{display:inline-flex;align-items:baseline;gap:6px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:4px 11px;font:inherit;font-size:13.5px;cursor:pointer;text-align:left;max-width:100%}
+.pchip:hover{border-color:var(--accent)}
+.pchip .b{font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--ink);border-radius:4px;padding:1px 6px;align-self:center;white-space:nowrap}
+.pol-steps li{margin:8px 0;line-height:1.9}
+.pol-table{width:100%;border-collapse:collapse;font-size:14.5px}
+.pol-table th{text-align:left;font-weight:500;color:var(--muted);font-size:12.5px;padding:6px 8px;border-bottom:1px solid var(--line)}
+.pol-table td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+.pol-table tr:last-child td{border-bottom:0}
+.pol-note{margin:10px 0 0;font-size:14.5px}
+.pol-tips{margin-top:12px!important}
+.pol-src{font-size:12.5px;color:var(--muted);margin:2px 4px}
+@media (max-width:600px){
+  .tabs button{font-size:13.5px;padding:9px 4px}
+  .pol-box{padding:13px 12px}
+  .pol-grp{grid-template-columns:1fr}
+  .pol-grp>span{padding-top:0}
+  .pol-table,.pol-table tbody,.pol-table tr,.pol-table td{display:block;width:100%}
+  .pol-table tr:first-child{display:none}
+  .pol-table tr{padding:8px 0;border-bottom:1px solid var(--line)}
+  .pol-table td{border:0;padding:2px 0}
+  .pol-table td:first-child{font-weight:700}
+}
 /* ===== Мобільна адаптація ===== */
 .filters-toggle{display:none}
 .flow .prods button{text-align:left;max-width:100%}
@@ -334,6 +374,16 @@ body.cpick-open .to-top{display:none}
   .flow .prods button{font-size:13.5px;padding:5px 10px;flex-wrap:wrap;row-gap:2px}
   .calc .hint{font-size:12.5px}
 }
+@media (max-width:600px){.tabs button{font-size:13.5px;padding:9px 4px}}
+.tabs .sm{display:none}
+@media (max-width:600px){.tabs .lg{display:none}.tabs .sm{display:inline}}
+@media (max-width:600px){.pol-table td[data-label]::before{content:attr(data-label)": ";color:var(--muted);font-size:12.5px;font-weight:400}}
+:root[data-theme="dark"]{--step1:#FF6B6B;--step2:#F5C518;--step3:#B98CF2}
+.nc-step1,.nc-step1 .name-link{color:var(--step1)!important;font-weight:700}
+.nc-step2,.nc-step2 .name-link{color:var(--step2)!important;font-weight:700}
+.nc-step3,.nc-step3 .name-link{color:var(--step3)!important;font-weight:700}
+.calc .cpick-cur .nm.nc-step2{color:#F5C518!important}.calc .cpick-cur .nm.nc-step1{color:#FF7A7A!important}.calc .cpick-cur .nm.nc-step3{color:#C9A4FF!important}
+.pol-sub{margin:18px 0 8px;font-size:15.5px;padding-top:14px;border-top:1px solid var(--line)}
 </style>
 </head>
 <body>
@@ -342,7 +392,8 @@ body.cpick-open .to-top{display:none}
     <h1>Мийка<small>Мої засоби: для чого, як розводити, чого не робити</small></h1>
     <div class="tabs" role="tablist">
       <button role="tab" aria-selected="true" data-tab="products">Засоби</button>
-      <button role="tab" aria-selected="false" data-tab="flow">Порядок мийки</button>
+      <button role="tab" aria-selected="false" data-tab="flow"><span class="lg">Порядок мийки</span><span class="sm">Порядок</span></button>
+      <button role="tab" aria-selected="false" data-tab="polish">Полірування</button>
     </div>
   </header>
 
@@ -417,6 +468,9 @@ body.cpick-open .to-top{display:none}
 
   <section id="tab-flow" hidden>
     <ol class="flow" id="flow"></ol>
+  </section>
+  <section id="tab-polish" hidden>
+    <div class="polish" id="polish"></div>
   </section>
 </div>
 
@@ -2894,7 +2948,7 @@ const PRODUCTS = [
     safety: ["Окуляри (бризки пасти)", "Не працювати з мокрими руками / на мокрій підлозі (мережевий інструмент)"],
     storage: "Сухе місце, без педа на підошві (щоб липучка не деформувалась)",
     frostSensitive: false,
-    pairs: "Потрібні полірувальні педи і пасти — їх поки немає в списку. Догляд за педами — Chemical Guys Polishing Pad Cleaner. Залишки пасти — Gyeon PolishWipe. Після полірування — Gyeon Prep → Gyeon Q² Wax.",
+    pairs: "Потрібні полірувальні педи і пасти — їх поки немає в списку. Догляд за педами — Chemical Guys Polishing Pad Cleaner. Залишки пасти — Gyeon PolishWipe. Після полірування — Gyeon Prep → Gyeon Q² Wax. Швидкості: розмазати 1–2; 🔴 H9.02 і 🟠 F6.01 — 4–5; 🟡 M2.02 — 4–5; віск — 1–3. Старт з 4, найвищу (~5600) — не на початку.",
     notes: "Точну модель з фото не підтвердив: схоже на серію Titan TDA (ексцентрикова, 150 мм підошва), на регуляторі видно оберти 4300–5600. Характеристики (потужність, хід ексцентрика, діаметр) — уточни в інструкції машинки. Всі кроки й застереження — загальна практика роботи з DA-машинкою, не від Titan.",
     link: "https://prom.ua/p3096566272-polirovalnaya-mashina-rotatsionno.html",
     price: "",
@@ -2902,6 +2956,7 @@ const PRODUCTS = [
   },
   {
     name: "Thermo Pad червоний (Hard / Heavy Cut)",
+    nameColor: "step1",
     brand: "ZviZZer",
     volume: "Полірувальний круг (пед), на липучці",
     category: "tools",
@@ -2933,7 +2988,7 @@ const PRODUCTS = [
     safety: [],
     storage: "Чистим і сухим, у пакеті, окремо від інших педів",
     frostSensitive: false,
-    pairs: "Машинка — Titan DA. Паста — Koch Chemie Heavy Cut H9.02. Для доведення — помаранчевий ZviZZer Thermo Pad (Medium) або м'якший + фінішна паста. Чистка — Chemical Guys Polishing Pad Cleaner.",
+    pairs: "Машинка — Titan DA. Паста — Koch Chemie Heavy Cut H9.02. Для доведення — помаранчевий ZviZZer Thermo Pad (Medium) або м'якший + фінішна паста. Чистка — Chemical Guys Polishing Pad Cleaner. Швидкість: розмазати 1–2, працювати 4–5 (~4300–4900), помірний натиск.",
     notes: "З даних ZviZZer: система кольорів — синій (Ultra Hard, Pre Cut) → червоний (Hard, Heavy Cut) → помаранчевий (Medium, One-Step) → жовтий (Soft, Fine Cut) → зелений (Ultra Soft, Finish); пед і паста підбираються одного кольору; термо-поролон не м'якне від нагріву; для DA-машинок. Діаметр твого педа зі сторінки магазину не прочитав — звір з підошвою машинки.",
     link: "https://prom.ua/p2200880277-polirovalnyj-krug-eksts.html",
     price: "",
@@ -2941,6 +2996,7 @@ const PRODUCTS = [
   },
   {
     name: "Thermo Pad помаранчевий (Medium / One-Step)",
+    nameColor: "step2",
     brand: "ZviZZer",
     volume: "Полірувальний круг (пед), на липучці",
     category: "tools",
@@ -2971,7 +3027,7 @@ const PRODUCTS = [
     safety: [],
     storage: "Чистим і сухим, у пакеті, окремо від інших педів",
     frostSensitive: false,
-    pairs: "Машинка — Titan DA. Паста — Koch Chemie Fine Cut F6.01. Пара до червоного педа: червоний (ріже) → помаранчевий (доводить). Чистка — Chemical Guys Polishing Pad Cleaner.",
+    pairs: "Машинка — Titan DA. Паста — Koch Chemie Fine Cut F6.01. Пара до червоного педа: червоний (ріже) → помаранчевий (доводить). Чистка — Chemical Guys Polishing Pad Cleaner. Швидкість: розмазати 1–2, працювати 4–5, наприкінці 5 з легким натиском.",
     notes: "З даних ZviZZer: помаранчевий = Medium, пара до пасти Medium Cut / One-Step; термо-поролон не м'якне від нагріву; для DA-машинок. Порада «найкращий для першого досвіду» — моя: помірна жорсткість менш ризикована для лаку. Діаметр зі сторінки магазину не прочитав.",
     link: "https://prom.ua/p2200880278-polirovalnyj-krug-eksts.html",
     price: "",
@@ -2979,6 +3035,7 @@ const PRODUCTS = [
   },
   {
     name: "Thermo Pad жовтий (Soft / Fine Cut)",
+    nameColor: "step3",
     brand: "ZviZZer",
     volume: "Полірувальний круг (пед), на липучці",
     category: "tools",
@@ -3010,7 +3067,7 @@ const PRODUCTS = [
     safety: [],
     storage: "Чистим і сухим, у пакеті, окремо від інших педів",
     frostSensitive: false,
-    pairs: "Повний набір педів: червоний (ріже) → помаранчевий (доводить / один крок) → жовтий (фініш). Паста — Koch Chemie Micro Cut M2.02 (окремий пед тільки під неї). Чистка — Chemical Guys Polishing Pad Cleaner.",
+    pairs: "Повний набір педів: червоний (ріже) → помаранчевий (доводить / один крок) → жовтий (фініш). Паста — Koch Chemie Micro Cut M2.02 (окремий пед тільки під неї). Чистка — Chemical Guys Polishing Pad Cleaner. Швидкість: з M2.02 — 4–5 до прозорої плівки; для воску — окремий пед на 1–3.",
     notes: "З даних ZviZZer: жовтий = Soft, пара до пасти Fine Cut, для точного фінішного полірування; термо-поролон не м'якне від нагріву; для DA-машинок. Нанесення воску машинкою — загальна практика, не з опису ZviZZer. Діаметр зі сторінки магазину не прочитав.",
     link: "https://rozetka.com.ua/ua/438758363/p438758363/",
     price: "",
@@ -3018,6 +3075,7 @@ const PRODUCTS = [
   },
   {
     name: "Heavy Cut H9.02",
+    nameColor: "step1",
     film: {"level": "no", "text": "НЕ по бронеплівці (фари, скло) — ріжуча паста зіпсує плівку. Плівки заклеювати скотчем, якщо полірується поряд лак."},
     brand: "Koch Chemie",
     volume: "250 мл",
@@ -3058,6 +3116,7 @@ const PRODUCTS = [
   },
   {
     name: "Fine Cut F6.01",
+    nameColor: "step2",
     film: {"level": "no", "text": "НЕ по бронеплівці (фари, скло). Поруч — заклей краї скотчем."},
     brand: "Koch Chemie",
     volume: "250 мл",
@@ -3098,6 +3157,7 @@ const PRODUCTS = [
   },
   {
     name: "Micro Cut M2.02",
+    nameColor: "step3",
     film: {"level": "no", "text": "Не по бронеплівці фар без спеціальної технології для плівок."},
     brand: "Koch Chemie",
     volume: "250 мл",
@@ -3617,6 +3677,7 @@ let NOTES={};
 try{ NOTES=JSON.parse(localStorage.getItem(NOTES_KEY)||"{}")||{}; }catch(e){ NOTES={}; }
 function saveNotes(){ try{ localStorage.setItem(NOTES_KEY, JSON.stringify(NOTES)); return true; }catch(e){ return false; } }
 const noteOf = p => (NOTES[p.name]||"");
+const nameCls = p => p && p.nameColor ? "nc-"+p.nameColor : "";
 const STRENGTH = {soft:"М'який", medium:"Середній", strong:"Агресивний"};
 
 let activeCat = "all";
@@ -3640,7 +3701,7 @@ function compareHTML(p){
     const rows = g.items.map(it=>{
       const j = PRODUCTS.findIndex(x=>x.name===it.n); const q = PRODUCTS[j]; if(!q) return "";
       const self = q===p;
-      const nm = `${q.brand?`<span class="cb" style="${brandStyle(q.brand)}">${esc(q.brand)}</span>`:""}${esc(q.name)}`;
+      const nm = `${q.brand?`<span class="cb" style="${brandStyle(q.brand)}">${esc(q.brand)}</span>`:""}<span class="${nameCls(q)}">${esc(q.name)}</span>`;
       return `<tr class="${self?"self":""}"><td>${self?`<b>${nm}</b><span class="you">цей</span>`:`<button type="button" class="cmp-go" data-cmp-goto="${j}">${nm}</button>`}</td><td data-label="Особливість">${esc(it.k)}</td><td data-label="Коли брати">${esc(it.w)}</td></tr>`;
     }).join("");
     return `<div class="sec cmp"><h3>Порівняння: ${esc(g.title)}</h3>${g.note?`<p class="cmp-note">${esc(g.note)}</p>`:""}<div class="table-wrap"><table class="cmp-table"><tr><th>Засіб</th><th>Особливість</th><th>Коли брати</th></tr>${rows}</table></div></div>`;
@@ -3692,7 +3753,7 @@ function cardHTML(p, i){
       ${p.photo ? `<img class="thumb" src="${esc(p.photo)}" alt="" loading="lazy" onerror="this.closest('.card-head').classList.remove('has-photo');this.remove()">` : ""}
       <button type="button" class="card-cat" data-fcat="${esc(p.category)}" title="Показати все: ${esc(cat.name)}">${cat.name}</button>
       ${ratioHTML}
-      <h2>${p.link ? `<a class="name-link" href="${esc(p.link)}" target="_blank" rel="noopener">${esc(p.name)}<span class="ext" aria-hidden="true">↗</span></a>` : esc(p.name)}</h2>
+      <h2 class="${nameCls(p)}">${p.link ? `<a class="name-link" href="${esc(p.link)}" target="_blank" rel="noopener">${esc(p.name)}<span class="ext" aria-hidden="true">↗</span></a>` : esc(p.name)}</h2>
       ${p.brand ? `<button type="button" class="brand" data-fbrand="${esc(brandKey(p.brand))}" title="Усі засоби ${esc(p.brand)}" style="${brandStyle(p.brand)}">${esc(p.brand)}</button>` : ""}
       <div class="badges">${badges.join("")}</div>
       <button class="toggle" type="button" aria-expanded="false">Детальніше</button>
@@ -3764,7 +3825,7 @@ function renderFlow(){
         ${f.optional ? `<span class="opt">За потреби</span>` : ""}
         <p>${f.text}</p>
         ${prods.length
-          ? `<div class="prods">${prods.map(([p,i])=>`<button type="button" data-goto="${i}">${p.brand ? `<span class="b" style="${brandStyle(p.brand)}">${esc(p.brand)}</span>` : ""}${esc(p.name)}</button>`).join("")}</div>`
+          ? `<div class="prods">${prods.map(([p,i])=>`<button type="button" data-goto="${i}">${p.brand ? `<span class="b" style="${brandStyle(p.brand)}">${esc(p.brand)}</span>` : ""}<span class="${nameCls(p)}">${esc(p.name)}</span></button>`).join("")}</div>`
           : `<div class="none">Ще немає засобу для цього кроку</div>`}
       </div></li>`;
   }).join("");
@@ -3789,7 +3850,7 @@ function renderPickList(q){
   const list=calcList().filter(([p])=>!q || [p.brand,p.name,p.type,p.purpose,...p.dilutions.map(d=>d.label)].join(" ").toLowerCase().includes(q));
   let html = q ? "" : `<button type="button" class="cpick-opt manual ${cur===""?"on":""}" data-v="">— вручну — <span class="hint">ввести пропорцію самому</span></button>`;
   html += list.map(([p,i])=>`<div class="cpick-grp">
-      <div class="cpick-head">${p.photo?`<img src="${esc(p.photo)}" alt="" loading="lazy">`:""}<span class="cb" style="${brandStyle(p.brand)}">${esc(p.brand)}</span><span class="nm">${esc(p.name)}</span></div>
+      <div class="cpick-head">${p.photo?`<img src="${esc(p.photo)}" alt="" loading="lazy">`:""}<span class="cb" style="${brandStyle(p.brand)}">${esc(p.brand)}</span><span class="nm ${nameCls(p)}">${esc(p.name)}</span></div>
       ${p.dilutions.map((d,j)=>{const v=`${i}:${j}`;return `<button type="button" class="cpick-opt ${cur===v?"on":""}" data-v="${v}"><span class="lb">${esc(d.label)}</span><span class="rt">1:${d.ratio}</span></button>`;}).join("")}
     </div>`).join("");
   if(!list.length) html += `<div class="cpick-empty">Нічого не знайдено</div>`;
@@ -3799,7 +3860,7 @@ function updatePickBtn(){
   const v=$("#c-prod").value, cur=$("#cpick-cur");
   if(!v){ cur.innerHTML="— вручну —"; return; }
   const [i,j]=v.split(":").map(Number); const p=PRODUCTS[i], d=p.dilutions[j];
-  cur.innerHTML=`<span class="cb" style="${brandStyle(p.brand)}">${esc(p.brand)}</span><span class="nm">${esc(p.name)}</span><span class="lb">${esc(d.label)} · 1:${d.ratio}</span>`;
+  cur.innerHTML=`<span class="cb" style="${brandStyle(p.brand)}">${esc(p.brand)}</span><span class="nm ${nameCls(p)}">${esc(p.name)}</span><span class="lb">${esc(d.label)} · 1:${d.ratio}</span>`;
 }
 function openPick(){
   $("#cpick-panel").hidden=false; $("#cpick-back").hidden=false; $("#cpick-btn").setAttribute("aria-expanded","true");
@@ -3841,6 +3902,7 @@ function showTab(t){
   document.querySelectorAll(".tabs button").forEach(b=>b.setAttribute("aria-selected", b.dataset.tab===t));
   $("#tab-products").hidden = t!=="products";
   $("#tab-flow").hidden = t!=="flow";
+  $("#tab-polish").hidden = t!=="polish";
 }
 
 /* ----- події ----- */
@@ -3954,6 +4016,134 @@ fillCalcProducts(); renderChips(); renderGrid(); renderFlow(); calc();
     e.target.value="";
   });
 })();
+
+function pchip(name){
+  const i=PRODUCTS.findIndex(p=>p.name===name); if(i<0) return esc(name);
+  const p=PRODUCTS[i];
+  return `<button type="button" class="pchip" data-goto="${i}">${p.brand?`<span class="b" style="${brandStyle(p.brand)}">${esc(p.brand)}</span>`:""}<span class="${nameCls(p)}">${esc(p.name)}</span></button>`;
+}
+function renderPolish(){
+  const P = {
+    machine:"Ексцентрикова полірувальна машина (DA)",
+    red:"Thermo Pad червоний (Hard / Heavy Cut)", orange:"Thermo Pad помаранчевий (Medium / One-Step)", yellow:"Thermo Pad жовтий (Soft / Fine Cut)",
+    h9:"Heavy Cut H9.02", f6:"Fine Cut F6.01", m2:"Micro Cut M2.02",
+    wipe:"Q²M PolishWipe EVO", prep:"Q²M Prep", pps:"Panel Preparation Spray (Pps)", ipa:"IPA Cleaner Professional",
+    wax:"Q² Wax", icy:"ICY Ceramic Detailer", padc:"Polishing Pad Cleaner", tape:"Малярний скотч", gloves:"Нітрилові рукавиці",
+    dtox:"D-Tox Liquid", rrr:"Reactive Rust Remover (Rrr)", tea:"Teerwäsche A (Tea)", clay:"Smooth Egg Clay Bar", lube:"Smooth Clay Lube",
+    shampoo:"Shampoo One", auto:"Autoshampoo (As)", prew:"Citrus Pre Cleaner", dry:"Q²M SilkDryer EVO", wapp:"Q²M Wax Applicator"
+  };
+  const c = k => pchip(P[k]);
+  $("#polish").innerHTML = `
+  <div class="pol-intro">
+    <h2>Полірування лаку</h2>
+    <p>Полірування — це <b>зрізання тонкого шару прозорого лаку</b>, щоб вирівняти поверхню навколо подряпин. Прозорого лаку на кузові лише кілька десятків мікронів і він не відновлюється, тому головне правило: <b>мінімально необхідна агресивність</b> — починай з м'якшої комбінації і посилюй, тільки якщо не бере.</p>
+  </div>
+
+  <div class="pol-box warn">
+    <h3>🚗 Моє авто — що НЕ полірувати</h3>
+    <ul>
+      <li><b>Фари</b> — під бронеплівкою. Не полірувати.</li>
+      <li><b>Лобове, заднє скло, панорама</b> — під бронеплівкою; скло машинкою взагалі не поліруємо.</li>
+      <li><b>Краї бронеплівки й стики</b> — заклеїти скотчем, пед може підняти край.</li>
+      <li>Нефарбований пластик, гума, молдинги, емблеми — заклеїти.</li>
+    </ul>
+  </div>
+
+  <div class="pol-box">
+    <h3>🧰 Мій набір</h3>
+    <div class="pol-grp"><span>Машинка</span><div class="pc">${c("machine")}</div></div>
+    <div class="pol-grp"><span>Педи</span><div class="pc">${c("red")}${c("orange")}${c("yellow")}</div></div>
+    <div class="pol-grp"><span>Пасти</span><div class="pc">${c("h9")}${c("f6")}${c("m2")}</div></div>
+    <div class="pol-grp"><span>Догляд за педами</span><div class="pc">${c("padc")}</div></div>
+  </div>
+
+  <div class="pol-box">
+    <h3>🎯 Яку комбінацію брати</h3>
+    <div class="table-wrap"><table class="pol-table">
+      <tr><th>Стан лаку</th><th>Пед + паста</th><th>Кроків</th></tr>
+      <tr><td>Легка павутинка, потьмяніння, мийні подряпини</td><td>🟠 помаранчевий + F6.01</td><td>1 (one-step)</td></tr>
+      <tr><td>Те саме, але потрібен максимальний блиск / темний колір</td><td>🟠 + F6.01 → 🟡 + M2.02</td><td>2</td></tr>
+      <tr><td>Помітні подряпини, окислення, вивітрений лак</td><td>🔴 + H9.02 → 🟠 + F6.01 → 🟡 + M2.02</td><td>3</td></tr>
+      <tr><td>Лише голограми / серпанок після чужого полірування</td><td>🟡 + M2.02</td><td>1</td></tr>
+    </table></div>
+    <p class="pol-note"><b>Тест-ділянка:</b> на непомітній ділянці ~50×50 см спершу 🟠+F6.01. Подивись під яскравим світлом (ліхтарик / сонце під кутом). Не бере — тоді 🔴+H9.02 і обов'язково доводиш 🟠/🟡. Перевірена комбінація — на все авто.</p>
+    <p class="pol-note"><b>Тест нігтем:</b> якщо ніготь чіпляється за подряпину — вона, ймовірно, глибша за прозорий лак. Таку до кінця не виводити: тільки згладити краї, щоб не протерти лак.</p>
+      <h4 class="pol-sub">🎚 Швидкість для кожного педа</h4>
+    <div class="table-wrap"><table class="pol-table">
+      <tr><th>Що робиш</th><th>Пед + паста</th><th>Позиція 1–6</th><th>Орієнтовно об/хв</th><th>Натиск</th></tr>
+      <tr><td>Розмазати пасту по ділянці</td><td>будь-який</td><td>1–2</td><td>найнижчі</td><td>без натиску</td></tr>
+      <tr><td>Зріз подряпин</td><td>🔴 червоний + H9.02</td><td>4–5</td><td>~4300–4900</td><td>помірний, рівний</td></tr>
+      <tr><td>Один крок / доведення</td><td>🟠 помаранчевий + F6.01</td><td>4–5, наприкінці 5</td><td>~4300 → 4900</td><td>помірний → легкий</td></tr>
+      <tr><td>Фініш, максимальний блиск</td><td>🟡 жовтий + M2.02</td><td>4–5</td><td>~4300–4900</td><td>помірний → легкий, до прозорої плівки</td></tr>
+      <tr><td>Нанесення воску машинкою</td><td>окремий чистий 🟡</td><td>1–3</td><td>низькі</td><td>без натиску</td></tr>
+    </table></div>
+    <p class="pol-note"><b>Як зрозуміти, що швидкість правильна</b> (важливіше за цифру):</p>
+    <ul class="pol-tips">
+      <li><b>Пед обертається</b>, а не лише вібрує. Зупиняється — менше натиску, пед рівно.</li>
+      <li><b>Лак теплий, але не гарячий</b> — долоня витримує спокійно. Гаряче — знизь оберти, пройди швидше.</li>
+      <li><b>Паста не висихає за 1–2 проходи.</b> Висихає — оберти зависокі або пасти замало.</li>
+      <li><b>Найвищу позицію (~5600) не використовуй</b> на початку — найбільший ризик перегріти лак і край деталі.</li>
+      <li><b>Старт:</b> позиція 4 на тест-ділянці → оцінка під світлом → 5 лише якщо дефект не йде.</li>
+    </ul>
+    <p class="pol-note" style="color:var(--muted);font-size:13px">Загальна практика для DA-машинок з регулятором на 6 позицій; на регуляторі Titan видно 4300 / 4900 / 5600 — точну відповідність позицій обертам звір з інструкцією машинки.</p>
+  </div>
+
+  <div class="pol-box">
+    <h3>🪜 Порядок роботи</h3>
+    <ol class="pol-steps">
+      <li><b>Мийка:</b> ${c("prew")} → ${c("shampoo")} або ${c("auto")} (методом двох відер).</li>
+      <li><b>Деконтамінація:</b> ${c("dtox")} / ${c("rrr")} → ${c("tea")} точково на бітум → глина ${c("clay")} з ${c("lube")} (не по бронеплівці). Змити, висушити ${c("dry")}.</li>
+      <li><b>Огляд під світлом</b> у тіні/гаражі: де які дефекти, де тонкі місця (ребра, краї, вигини).</li>
+      <li><b>Заклеїти</b> ${c("tape")}: молдинги, гуму, пластик, емблеми, ребра панелей, краї бронеплівки.</li>
+      <li><b>Тест-ділянка</b> — підібрати комбінацію (таблиця вище).</li>
+      <li><b>Полірування</b> панель за панеллю, ділянками ~50×50 см (швидкості — у «Яку комбінацію брати»). Після кожної ділянки — зняти залишки ${c("wipe")} і перевірити під світлом.</li>
+      <li><b>Фініш</b> (якщо треба) — 🟡 + ${c("m2")} на окремому педі.</li>
+      <li><b>Знежирення:</b> ${c("prep")} (або ${c("pps")}) — прибирає масла паст, показує чесний результат.</li>
+      <li><b>Захист</b> одразу: ${c("wax")} аплікатором ${c("wapp")}. Між мийками — ${c("icy")}.</li>
+      <li><b>Педи</b> — одразу вимити ${c("padc")}, висушити липучкою вгору.</li>
+    </ol>
+  </div>
+
+  <div class="pol-box">
+    <h3>🩺 Якщо щось не так</h3>
+    <div class="table-wrap"><table class="pol-table">
+      <tr><th>Проблема</th><th>Чому</th><th>Що робити</th></tr>
+      <tr><td>Серпанок, голограми</td><td>ріжучий пед/паста, не доведено</td><td>фінішний крок 🟡 + M2.02, легший натиск у кінці</td></tr>
+      <tr><td>Паста пилить, висихає</td><td>забагато пасти, сонце/тепло, пед забитий</td><td>менше пасти, тінь, чистити пед; трохи детейлера на пед</td></tr>
+      <tr><td>Пед гарячий, «пливе» з липучки</td><td>перегрів</td><td>дати охолонути, змінити пед на інший</td></tr>
+      <tr><td>Дефект не зникає</td><td>глибока подряпина / замало проходів</td><td>ще 1–2 проходи, далі — жорсткіша комбінація; якщо нігтем чіпляється — не дотискати</td></tr>
+      <tr><td>Пед не обертається</td><td>натиск / нахил</td><td>менше натиску, пед паралельно</td></tr>
+      <tr><td>Після знежирення подряпини «повернулися»</td><td>паста їх тимчасово заповнила</td><td>ще крок полірування на цій ділянці</td></tr>
+    </table></div>
+  </div>
+
+  <div class="pol-box danger">
+    <h3>⛔ Чого НЕ робити</h3>
+    <ul>
+      <li>Не полірувати <b>бронеплівку</b> (фари), скло, пластик, гуму, плівки.</li>
+      <li>Не полірувати <b>ребра, краї й гострі вигини</b> — там лак найтонший; заклеїти скотчем.</li>
+      <li>Не полірувати <b>брудне</b> авто й авто без деконтамінації — пісок і залізо під педом дряпають.</li>
+      <li>Не полірувати на <b>сонці</b> й гарячому лаку.</li>
+      <li>Не вмикати машинку <b>в повітрі</b> з пастою — розлетиться.</li>
+      <li>Не тримати пед на одному місці й не тиснути всією вагою — перегрів, протирання.</li>
+      <li>Не змішувати пасти на одному педі; під M2.02 — окремий пед.</li>
+      <li>Не починати з найжорсткішого — спершу тест-ділянка.</li>
+      <li>Не полірувати свіжий перефарб без консультації з маляром (лак має повністю висохнути).</li>
+      <li>Не полірувати часто: машинне полірування — раз на рік-два, між ними — мийка без подряпин і віск.</li>
+      <li>Не лишати лак без захисту після полірування — одразу Prep → віск.</li>
+      <li>Без рукавиць і окулярів з пастами — бризки.</li>
+    </ul>
+  </div>
+  <p class="pol-src">Основи й техніка — загальна практика полірування DA-машинкою; конкретні рекомендації для паст Koch і педів ZviZZer — з їхніх карток у каталозі (розділ «Моє авто» враховує твої плівки).</p>`;
+
+  document.querySelectorAll("#polish .pol-table").forEach(t=>{
+    const hs=[...t.querySelectorAll("tr:first-child th")].map(th=>th.textContent);
+    t.querySelectorAll("tr").forEach((tr,ri)=>{ if(!ri) return; tr.querySelectorAll("td").forEach((td,ci)=>{ if(ci) td.dataset.label=hs[ci]; }); });
+  });
+}
+
+renderPolish();
+$("#polish").addEventListener("click", e=>{ const b=e.target.closest("[data-goto]"); if(!b) return; activeCat="all"; activeBrand=""; query=""; $("#search").value=""; showTab("products"); renderChips(); renderGrid(); const card=document.querySelector(`.card[data-i="${b.dataset.goto}"]`); if(card){ card.querySelector("[data-toggle]").click(); card.scrollIntoView({behavior:"smooth",block:"start"}); } });
 </script>
 </body>
 </html>
